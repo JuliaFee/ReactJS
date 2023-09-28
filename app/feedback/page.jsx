@@ -6,8 +6,7 @@ function Feedback(){
         <>
         <Header/>
         <div>
-            <h2>Class e Objeto</h2>
-            
+            <h2>FeedBack</h2>
         </div>
         <Footer/>
         
