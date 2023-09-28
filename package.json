@@ -13,5 +13,10 @@
     "react": "latest",
     "react-dom": "latest",
     "react-icons": "^4.11.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.7.1",
+    "@types/react": "18.2.23",
+    "typescript": "5.2.2"
   }
 }
