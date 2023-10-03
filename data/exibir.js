@@ -3,19 +3,21 @@ import React from "react";
 import { useState } from "react";
 import { EquipeService } from "../models/equipeService";
 import { Equipe } from "../models/equipe";
-
+import style from "../app/page.module.css";
+import { MdDelete } from "react-icons/md"
+import { FiEdit } from "react-icons/fi"
 const equipeService = new EquipeService();
 
 function Exibir() {
   const [nomeDaEquipe, setNomeDaEquipe] = useState('');
-  const [quantidade, setQuantidade] = useState('');
+  const [numero, setNumero] = useState('');
   const [equipeId, setEquipeId] = useState(null);
   const [equipes, setEquipes] = useState([]);
   const [equipeUnica, setEquipeUnica] = useState(null);
 
   function criarEquipe() {
     const nome = nomeDaEquipe;
-    const titulares = Number(quantidade);
+    const titulares = Number(numero);
 
     const novaEquipe = new Equipe(nome, titulares);
     equipeService.adicionarEquipe(novaEquipe);
@@ -37,24 +39,24 @@ function Exibir() {
     const equipe = equipeService.listarEquipesPorId(id);
 
     setNomeDaEquipe(equipe.nome);
-    setQuantidade(equipe.titulares);
+    setNumero(equipe.titulares);
 
     setEquipeId(id);
   }
 
   function editarEquipe() {
-    equipeService.atualizarEquipe(equipeId, nomeDaEquipe, quantidade);
+    equipeService.atualizarEquipe(equipeId, nomeDaEquipe, numero);
     listarEquipes();
 
     setNomeDaEquipe('');
-    setQuantidade('');
+    setNumero('');
     setEquipeId(null);
     setEquipeUnica(null);
   }
 
   function limparInputs() {
     setNomeDaEquipe('');
-    setQuantidade('');
+    setNumero('');
   }
 
   function deletarEquipe(id) {
@@ -64,11 +66,11 @@ function Exibir() {
   }
 
   return (
-    <div className="exibir">
-      <h2>Cadastro de equipes</h2>
+    <div className={style.exibir}>
+      <h2 className={style.title}>Cadastro de equipes</h2>
       <div>
         <input
-          id="nomeDaEquipe"
+          className={style.nomeDaEquipe}
           type="text"
           value={nomeDaEquipe}
           placeholder="Nome da Equipe"
@@ -76,37 +78,37 @@ function Exibir() {
         />
 
         <input
-          id="quantidade"
+          className={style.numero}
           type="number"
-          value={quantidade}
+          value={numero}
           placeholder="Jogadores Titulares"
-          onChange={(parametro) => setQuantidade(parametro.target.value)}
+          onChange={(parametro) => setNumero(parametro.target.value)}
         />
       </div>
 
       {equipeId ? (
-        <button onClick={editarEquipe}>Editar Equipe</button>
+        <button className={style.mainbtn} onClick={editarEquipe}>Editar Equipe</button>
       ) : (
-        <button onClick={criarEquipe}>Cadastrar</button>
+        <button className={style.mainbtn} onClick={criarEquipe}>Cadastrar</button>
       )}
 
       <div id="listarEquipes">
         {equipes.map((equipe) => (
-          <div key={equipe.id} onClick={() => listarEquipePorId(equipe.id)}>
+          <div className={style.render} key={equipe.id} onClick={() => listarEquipePorId(equipe.id)}>
             <p>Nome: {equipe.nome}</p>
           </div>
         ))}
       </div>
 
       {equipeUnica && (
-        <div id="listarEquipeUnica">
+        <div>
           <p>ID: {equipeUnica.id}</p>
           <p>Nome: {equipeUnica.nome}</p>
           <p>Total de jogadores: {equipeUnica.totalJogadores}</p>
           <p>Titulares: {equipeUnica.titulares}</p>
           <p>Reservas: {equipeUnica.reservas}</p>
-          <button onClick={() => atualizarEquipe(equipeUnica.id)}>Editar</button>
-          <button onClick={() => deletarEquipe(equipeUnica.id)}>Deletar</button>
+          <button className={style.editar} onClick={() => atualizarEquipe(equipeUnica.id)}><FiEdit/></button>
+          <button className={style.delete} onClick={() => deletarEquipe(equipeUnica.id)}><MdDelete/></button>
         </div>
       )}
     </div>
