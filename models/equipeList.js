@@ -1,5 +1,5 @@
 "use client";
-export class EquipeService {
+export class EquipeList {
     constructor() {
       this.equipes = [];
     }

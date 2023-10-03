@@ -1,12 +1,12 @@
 "use client";
 import React from "react";
 import { useState } from "react";
-import { EquipeService } from "../models/equipeService";
+import { EquipeList } from "../models/equipeList";
 import { Equipe } from "../models/equipe";
 import style from "../app/page.module.css";
 import { MdDelete } from "react-icons/md"
 import { FiEdit } from "react-icons/fi"
-const equipeService = new EquipeService();
+const equipeList = new EquipeList();
 
 function Exibir() {
   const [nomeDaEquipe, setNomeDaEquipe] = useState('');
@@ -20,23 +20,23 @@ function Exibir() {
     const titulares = Number(numero);
 
     const novaEquipe = new Equipe(nome, titulares);
-    equipeService.adicionarEquipe(novaEquipe);
+    equipeList.adicionarEquipe(novaEquipe);
     listarEquipes();
     limparInputs();
   }
 
   function listarEquipes() {
-    const equipes = equipeService.listarEquipes();
+    const equipes = equipeList.listarEquipes();
     setEquipes(equipes);
   }
 
   function listarEquipePorId(id) {
-    const equipe = equipeService.listarEquipesPorId(id);
+    const equipe = equipeList.listarEquipesPorId(id);
     setEquipeUnica(equipe);
   }
 
   function atualizarEquipe(id) {
-    const equipe = equipeService.listarEquipesPorId(id);
+    const equipe = equipeList.listarEquipesPorId(id);
 
     setNomeDaEquipe(equipe.nome);
     setNumero(equipe.titulares);
@@ -45,7 +45,7 @@ function Exibir() {
   }
 
   function editarEquipe() {
-    equipeService.atualizarEquipe(equipeId, nomeDaEquipe, numero);
+    equipeList.atualizarEquipe(equipeId, nomeDaEquipe, numero);
     listarEquipes();
 
     setNomeDaEquipe('');
@@ -60,7 +60,7 @@ function Exibir() {
   }
 
   function deletarEquipe(id) {
-    equipeService.deletarEquipe(id);
+    equipeList.deletarEquipe(id);
     listarEquipes();
     setEquipeUnica(null);
   }
